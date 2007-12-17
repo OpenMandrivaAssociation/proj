@@ -11,7 +11,6 @@ Source1: ftp://ftp.remotesensing.org/pub/proj/proj-datumgrid-1.3.tar.gz
 License: MIT
 URL: http://www.remotesensing.org/proj/
 Group: Sciences/Geosciences
-Buildroot: %{_tmppath}/%{name}-buildroot
 
 %description
 Cartographic projection software and libraries.
