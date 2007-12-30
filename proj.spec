@@ -3,7 +3,7 @@
 %define libname_orig %mklibname %name
 
 Name: proj
-Version: 4.5.0
+Version: 4.6.0
 Release: %mkrel 1
 Summary: Cartographic projection software
 Source0: ftp://ftp.remotesensing.org/pub/proj/%{name}-%{version}.tar.gz
@@ -38,7 +38,8 @@ Cartographic projection software and libraries.
 
 %files -n %{libname}
 %defattr (-,root,root)
-%{_libdir}/*.so.*
+%{_libdir}/*.so.%{major}
+%{_libdir}/*.so.%{major}.*
 
 #-------------------------------------------------------------------------
 
