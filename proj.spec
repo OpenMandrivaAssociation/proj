@@ -1,13 +1,12 @@
 %define major 0
 %define libname %mklibname %{name} %{major}
-%define libname_orig %mklibname %name
 
 Name: proj
-Version: 4.6.0
-Release: %mkrel 2
+Version: 4.6.1
+Release: %mkrel 1
 Summary: Cartographic projection software
 Source0: ftp://ftp.remotesensing.org/pub/proj/%{name}-%{version}.tar.gz
-Source1: ftp://ftp.remotesensing.org/pub/proj/proj-datumgrid-1.3.tar.gz
+Source1: ftp://ftp.remotesensing.org/pub/proj/proj-datumgrid-1.4.tar.gz
 License: MIT
 URL: http://trac.osgeo.org/proj/
 Group: Sciences/Geosciences
@@ -47,59 +46,55 @@ Cartographic projection software and libraries.
 %{_libdir}/*.so.%{major}.*
 
 #-------------------------------------------------------------------------
-
-%package -n %{libname}-devel
+%define develname %mklibname -d %name
+%package -n %{develname}
 Summary: Cartographic projection software - Development files
 Group: Development/Other
 License: MIT
-Provides: %{libname_orig}-devel = %{version}-%{release}
 Provides: %{name}-devel = %{version}-%{release}
-Provides: lib%{name}-devel = %{version}-%{release}
-Obsoletes: %{libname_orig}-devel
 Requires: %{libname} = %{version}-%{release}
+Obsoletes: %{_lib}proj0-devel < %{version}-%{release}
 
-%description -n %{libname}-devel
+%description -n %{develname}
 Cartographic projection development files.
 
-%files -n %{libname}-devel
+%files -n %{develname}
 %defattr (-,root,root)
 %{_includedir}/*.h
 %{_libdir}/*.so
 %{_libdir}/*.la
 
 #-------------------------------------------------------------------------
-
-%package -n %{libname}-static-devel
+%define sdevelname %mklibname -d -s %name
+%package -n %sdevelname
 Summary: Cartographic projection software - Development files
 Group: Development/Other
 License: MIT
-Provides: %{libname_orig}-static-devel = %{version}-%{release}
-Provides: lib%{libname_orig}-static-devel = %{version}-%{release}
-Obsoletes: %{libname_orig}-static-devel
+Provides: %name-static-devel = %{version}-%{release}
+Requires: %{develname} = %{version}-%{release}
 Requires: %{libname} = %version-%release
+Obsoletes: %{_lib}proj0-static-devel < %{version}-%{release}
 
-%description -n %{libname}-static-devel
+%description -n %{sdevelname}
 Cartographic projection development files (static).
 
-%files -n %{libname}-static-devel
+%files -n %{sdevelname}
 %defattr (-,root,root)
 %{_libdir}/*.a
 
 #-------------------------------------------------------------------------
 
 %prep
-rm -rf %buildroot
-
 %setup -D -q
 tar xfz %{SOURCE1} -C nad
 
-%configure
-
 %build
+%configure2_5x
 %make
 
 %install
-%makeinstall
+rm -rf %buildroot
+%makeinstall_std
 
 %clean
 rm -rf %buildroot  
