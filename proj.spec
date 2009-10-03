@@ -1,9 +1,9 @@
 Name: proj
 Version: 4.6.1
-Release: %mkrel 2
+Release: %mkrel 3
 Summary: Cartographic projection software
 Source0: ftp://ftp.remotesensing.org/pub/proj/%{name}-%{version}.tar.gz
-Source1: ftp://ftp.remotesensing.org/pub/proj/proj-datumgrid-1.4.tar.gz
+Source1: ftp://ftp.remotesensing.org/pub/proj/proj-datumgrid-1.5.zip
 License: MIT
 URL: http://trac.osgeo.org/proj/
 Group: Sciences/Geosciences
@@ -85,7 +85,9 @@ Cartographic projection development files (static).
 
 %prep
 %setup -D -q
-tar xfz %{SOURCE1} -C nad
+pushd nad
+unzip -qqo %{SOURCE1}
+popd
 
 %build
 %configure2_5x
