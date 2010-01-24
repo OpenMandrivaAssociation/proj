@@ -1,6 +1,6 @@
 Name: proj
-Version: 4.6.1
-Release: %mkrel 3
+Version: 4.7.0
+Release: %mkrel 1
 Summary: Cartographic projection software
 Source0: ftp://ftp.remotesensing.org/pub/proj/%{name}-%{version}.tar.gz
 Source1: ftp://ftp.remotesensing.org/pub/proj/proj-datumgrid-1.5.zip
@@ -98,6 +98,6 @@ rm -rf %buildroot
 %makeinstall_std
 
 %clean
-rm -rf %buildroot  
+rm -rf %buildroot
 
 
