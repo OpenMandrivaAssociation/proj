@@ -1,6 +1,6 @@
 Name: proj
 Version: 4.8.0
-Release: %mkrel 2
+Release: 3
 Summary: Cartographic projection software
 Source0: ftp://ftp.remotesensing.org/pub/proj/%{name}-%{version}.tar.gz
 Source1: ftp://ftp.remotesensing.org/pub/proj/proj-datumgrid-1.5.zip
@@ -14,7 +14,6 @@ Patch0:	remove_include.patch
 Cartographic projection software and libraries.
 
 %files
-%defattr (-,root,root)
 %doc AUTHORS COPYING ChangeLog README
 %{_bindir}/*
 %{_mandir}/man1/*
@@ -35,7 +34,6 @@ License: MIT
 Cartographic projection software and libraries.
 
 %files -n %{libname}
-%defattr (-,root,root)
 %{_libdir}/*.so.%{major}*
 
 #-------------------------------------------------------------------------
@@ -55,7 +53,6 @@ Obsoletes: %{mklibname -d proj 0}
 Cartographic projection development files.
 
 %files -n %{develname}
-%defattr (-,root,root)
 %{_includedir}/*.h
 %{_libdir}/*.so
 %{_libdir}/pkgconfig/proj.pc
@@ -78,7 +75,6 @@ Obsoletes: %{mklibname -d -s proj 0}
 Cartographic projection development files (static).
 
 %files -n %{sdevelname}
-%defattr (-,root,root)
 %{_libdir}/*.a
 
 #-------------------------------------------------------------------------
@@ -86,6 +82,7 @@ Cartographic projection development files (static).
 %prep
 %setup -D -q
 %patch0 -p0
+find . -name "*.c" -exec chmod 644 {} \;
 pushd nad
 unzip -qqo %{SOURCE1}
 popd
