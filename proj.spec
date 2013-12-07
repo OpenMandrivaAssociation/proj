@@ -1,7 +1,7 @@
 Summary:	Cartographic projection software
 Name:		proj
 Version:	4.8.0
-Release:	5
+Release:	6
 License:	MIT
 Group:		Sciences/Geosciences
 Url:		http://trac.osgeo.org/proj/
