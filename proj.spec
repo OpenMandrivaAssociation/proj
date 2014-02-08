@@ -1,6 +1,6 @@
 Name: proj
 Version: 4.8.0
-Release: 3
+Release: 4
 Summary: Cartographic projection software
 Source0: ftp://ftp.remotesensing.org/pub/proj/%{name}-%{version}.tar.gz
 Source1: ftp://ftp.remotesensing.org/pub/proj/proj-datumgrid-1.5.zip
