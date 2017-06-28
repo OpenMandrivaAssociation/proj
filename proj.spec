@@ -1,12 +1,12 @@
 Summary:	Cartographic projection software
 Name:		proj
-Version:	4.8.0
-Release:	11
+Version:	4.9.3
+Release:	1
 License:	MIT
 Group:		Sciences/Geosciences
-Url:		http://trac.osgeo.org/proj/
-Source0:	ftp://ftp.remotesensing.org/pub/proj/%{name}-%{version}.tar.gz
-Source1:	ftp://ftp.remotesensing.org/pub/proj/proj-datumgrid-1.5.zip
+Url:		http://proj4.org/
+Source0:	http://download.osgeo.org/proj/proj-%{version}.tar.gz
+Source1:	http://download.osgeo.org/proj/proj-datumgrid-1.6.zip
 Patch0:		remove_include.patch
 Provides:	proj4
 
@@ -22,7 +22,7 @@ Cartographic projection software and libraries.
 
 #-------------------------------------------------------------------------
 
-%define major 0
+%define major 12
 %define libname %mklibname %{name} %{major}
 
 %package -n %{libname}
