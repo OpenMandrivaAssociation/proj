@@ -1,14 +1,14 @@
 Summary:	Cartographic projection software
 Name:		proj
-Version:	5.2.0
+Version:	6.1.1
 Release:	1
 License:	MIT
 Group:		Sciences/Geosciences
 Url:		http://proj4.org/
-Source0:	http://download.osgeo.org/proj/proj-%{version}.tar.gz
-Source1:	http://download.osgeo.org/proj/proj-datumgrid-1.7.tar.gz
-Patch0:		remove_include.patch
+Source0:	https://download.osgeo.org/proj/proj-%{version}.tar.gz
+Source1:	https://download.osgeo.org/proj/proj-datumgrid-1.8.zip
 Provides:	proj4
+BuildRequires:	sqlite-tools
 
 %description
 Cartographic projection software and libraries.
@@ -22,7 +22,7 @@ Cartographic projection software and libraries.
 
 #-------------------------------------------------------------------------
 
-%define major 13
+%define major 15
 %define oldlibname %mklibname %{name} 12
 %define libname %mklibname %{name} %{major}
 
@@ -52,6 +52,7 @@ Cartographic projection development files.
 
 %files -n %{devname}
 %{_includedir}/*.h
+%{_includedir}/proj/*.hpp
 %{_libdir}/*.so
 %{_libdir}/pkgconfig/proj.pc
 
@@ -59,18 +60,15 @@ Cartographic projection development files.
 
 %prep
 %setup -D -q
-%patch0 -p0
 find . -name "*.c" -exec chmod 644 {} \;
-pushd nad
+pushd data
 tar xf %{SOURCE1}
 popd
 
 %build
-%configure2_5x --disable-static
+%configure --disable-static
 %make
 
 %install
 %makeinstall_std
 mkdir -p %{buildroot}%{_includedir}
-install -m644 src/projects.h %{buildroot}%{_includedir}/
-
