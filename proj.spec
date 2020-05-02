@@ -1,6 +1,6 @@
 Summary:	Cartographic projection software
 Name:		proj
-Version:	6.3.1
+Version:	7.0.1
 Release:	1
 License:	MIT
 Group:		Sciences/Geosciences
@@ -18,19 +18,20 @@ Cartographic projection software and libraries.
 %doc AUTHORS COPYING ChangeLog README
 %{_bindir}/*
 %{_mandir}/man1/*
-%{_mandir}/man3/*
 %{_datadir}/proj
 
 #-------------------------------------------------------------------------
 
-%define major 15
-%define oldlibname %mklibname %{name} 12
+%define major 19
+%define oldlibname %mklibname %{name} 15
+%define olderlibname %mklibname %{name} 12
 %define libname %mklibname %{name} %{major}
 
 %package -n %{libname}
 Summary:	Cartographic projection software - Libraries
 Group:		System/Libraries
 %rename %{oldlibname}
+%rename %{olderlibname}
 
 %description -n %{libname}
 Cartographic projection software and libraries.
