@@ -10,6 +10,7 @@ Source1:	https://download.osgeo.org/proj/proj-datumgrid-1.8.zip
 Provides:	proj4
 BuildRequires:	sqlite-tools
 BuildRequires:	pkgconfig(sqlite3)
+BuildRequires:	pkgconfig(libtiff-4)
 
 %description
 Cartographic projection software and libraries.
