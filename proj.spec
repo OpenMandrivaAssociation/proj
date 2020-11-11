@@ -11,6 +11,7 @@ Provides:	proj4
 BuildRequires:	sqlite-tools
 BuildRequires:	pkgconfig(sqlite3)
 BuildRequires:	pkgconfig(libtiff-4)
+BuildRequires:	curl pkgconfig(libcurl)
 
 %description
 Cartographic projection software and libraries.
