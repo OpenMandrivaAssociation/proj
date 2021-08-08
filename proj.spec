@@ -1,6 +1,9 @@
+# Bogus debugsource list
+%global _empty_manifest_terminate_build 0
+
 Summary:	Cartographic projection software
 Name:		proj
-Version:	7.2.1
+Version:	8.1.0
 Release:	1
 License:	MIT
 Group:		Sciences/Geosciences
@@ -18,15 +21,17 @@ Cartographic projection software and libraries.
 
 %files
 %doc AUTHORS COPYING ChangeLog README
+%doc %{_docdir}/proj/NEWS
 %{_bindir}/*
 %{_mandir}/man1/*
 %{_datadir}/proj
 
 #-------------------------------------------------------------------------
 
-%define major 19
-%define oldlibname %mklibname %{name} 15
-%define olderlibname %mklibname %{name} 12
+%define major 22
+%define oldlibname %mklibname %{name} 19
+%define olderlibname %mklibname %{name} 15
+%define evenolderlibname %mklibname %{name} 12
 %define libname %mklibname %{name} %{major}
 
 %package -n %{libname}
@@ -34,6 +39,7 @@ Summary:	Cartographic projection software - Libraries
 Group:		System/Libraries
 %rename %{oldlibname}
 %rename %{olderlibname}
+%rename %{evenolderlibname}
 
 %description -n %{libname}
 Cartographic projection software and libraries.
@@ -68,11 +74,11 @@ find . -name "*.c" -exec chmod 644 {} \;
 pushd data
 tar xf %{SOURCE1}
 popd
+%configure
 
 %build
-%configure --disable-static
-%make
+%make_build
 
 %install
-%makeinstall_std
+%make_install
 mkdir -p %{buildroot}%{_includedir}
