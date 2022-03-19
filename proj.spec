@@ -3,7 +3,7 @@
 
 Summary:	Cartographic projection software
 Name:		proj
-Version:	8.2.1
+Version:	9.0.0
 Release:	1
 License:	MIT
 Group:		Sciences/Geosciences
@@ -15,6 +15,7 @@ BuildRequires:	sqlite-tools
 BuildRequires:	pkgconfig(sqlite3)
 BuildRequires:	pkgconfig(libtiff-4)
 BuildRequires:	curl pkgconfig(libcurl)
+BuildRequires:	cmake ninja
 
 %description
 Cartographic projection software and libraries.
@@ -28,15 +29,17 @@ Cartographic projection software and libraries.
 
 #-------------------------------------------------------------------------
 
-%define major 22
+%define major 25
+%define lastversionedlibname %mklibname %{name} 22
 %define oldlibname %mklibname %{name} 19
 %define olderlibname %mklibname %{name} 15
 %define evenolderlibname %mklibname %{name} 12
-%define libname %mklibname %{name} %{major}
+%define libname %mklibname %{name}
 
 %package -n %{libname}
 Summary:	Cartographic projection software - Libraries
 Group:		System/Libraries
+%rename %{lastversionedlibname}
 %rename %{oldlibname}
 %rename %{olderlibname}
 %rename %{evenolderlibname}
@@ -65,6 +68,8 @@ Cartographic projection development files.
 %{_includedir}/proj/*.hpp
 %{_libdir}/*.so
 %{_libdir}/pkgconfig/proj.pc
+%{_libdir}/cmake/proj
+%{_libdir}/cmake/proj4
 
 #-------------------------------------------------------------------------
 
@@ -74,11 +79,10 @@ find . -name "*.c" -exec chmod 644 {} \;
 pushd data
 tar xf %{SOURCE1}
 popd
-%configure
+%cmake -G Ninja
 
 %build
-%make_build
+%ninja_build -C build
 
 %install
-%make_install
-mkdir -p %{buildroot}%{_includedir}
+%ninja_install -C build
