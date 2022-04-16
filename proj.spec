@@ -1,5 +1,12 @@
 # Bogus debugsource list
-%global _empty_manifest_terminate_build 0
+#global _empty_manifest_terminate_build 0
+
+%define major 22
+%define oldlibname %mklibname %{name} 19
+%define olderlibname %mklibname %{name} 15
+%define evenolderlibname %mklibname %{name} 12
+%define libname %mklibname %{name} %{major}
+%define devname %mklibname -d %{name}
 
 Summary:	Cartographic projection software
 Name:		proj
@@ -10,11 +17,15 @@ Group:		Sciences/Geosciences
 Url:		http://proj4.org/
 Source0:	https://download.osgeo.org/proj/proj-%{version}.tar.gz
 Source1:	https://download.osgeo.org/proj/proj-datumgrid-1.8.zip
-Provides:	proj4
-BuildRequires:	sqlite-tools
-BuildRequires:	pkgconfig(sqlite3)
+BuildRequires:	cmake
+BuildRequires:	ninja
+BuildRequires:	pkgconfig(gtest)
 BuildRequires:	pkgconfig(libtiff-4)
-BuildRequires:	curl pkgconfig(libcurl)
+BuildRequires:	pkgconfig(libcurl)
+BuildRequires:	pkgconfig(sqlite3)
+BuildRequires:	sqlite-tools
+
+Provides:	proj4
 
 %description
 Cartographic projection software and libraries.
@@ -27,12 +38,6 @@ Cartographic projection software and libraries.
 %{_datadir}/proj
 
 #-------------------------------------------------------------------------
-
-%define major 22
-%define oldlibname %mklibname %{name} 19
-%define olderlibname %mklibname %{name} 15
-%define evenolderlibname %mklibname %{name} 12
-%define libname %mklibname %{name} %{major}
 
 %package -n %{libname}
 Summary:	Cartographic projection software - Libraries
@@ -49,8 +54,6 @@ Cartographic projection software and libraries.
 
 #-------------------------------------------------------------------------
 
-%define devname %mklibname -d %{name}
-
 %package -n %{devname}
 Summary:	Cartographic projection software - Development files
 Group:		Development/Other
@@ -65,20 +68,24 @@ Cartographic projection development files.
 %{_includedir}/proj/*.hpp
 %{_libdir}/*.so
 %{_libdir}/pkgconfig/proj.pc
+%{_libdir}/cmake/proj
+%{_libdir}/cmake/proj4
 
 #-------------------------------------------------------------------------
 
 %prep
-%setup -D -q
-find . -name "*.c" -exec chmod 644 {} \;
+%autosetup -D
+#find . -name "*.c" -exec chmod 644 {} \;
+
 pushd data
 tar xf %{SOURCE1}
 popd
-%configure
 
 %build
-%make_build
+%cmake \
+	-DUSE_EXTERNAL_GTEST:BOOL=ON \
+	-G Ninja
+%ninja_build
 
 %install
-%make_install
-mkdir -p %{buildroot}%{_includedir}
+%ninja_install -C build
