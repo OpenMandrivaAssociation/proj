@@ -18,12 +18,15 @@ Group:		Sciences/Geosciences
 Url:		http://proj4.org/
 Source0:	https://download.osgeo.org/proj/proj-%{version}.tar.gz
 Source1:	https://download.osgeo.org/proj/proj-datumgrid-1.8.zip
-Provides:	proj4
-BuildRequires:	sqlite-tools
-BuildRequires:	pkgconfig(sqlite3)
+BuildRequires:	cmake
+BuildRequires:	ninja
+BuildRequires:	pkgconfig(gtest)
 BuildRequires:	pkgconfig(libtiff-4)
-BuildRequires:	curl pkgconfig(libcurl)
-BuildRequires:	cmake ninja
+BuildRequires:	pkgconfig(libcurl)
+BuildRequires:	pkgconfig(sqlite3)
+BuildRequires:	sqlite-tools
+
+Provides:	proj4
 
 %description
 Cartographic projection software and libraries.
