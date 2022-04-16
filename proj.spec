@@ -1,6 +1,3 @@
-# Bogus debugsource list
-#global _empty_manifest_terminate_build 0
-
 %define major 25
 %define lastversionedlibname %mklibname %{name} 22
 %define oldlibname %mklibname %{name} 19
@@ -84,6 +81,7 @@ popd
 
 %build
 %cmake \
+	-DUSE_EXTERNAL_GTEST:BOOL=ON \
 	-G Ninja
 %ninja_build
 
