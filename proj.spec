@@ -1,10 +1,18 @@
 # Bogus debugsource list
-%global _empty_manifest_terminate_build 0
+#global _empty_manifest_terminate_build 0
+
+%define major 25
+%define lastversionedlibname %mklibname %{name} 22
+%define oldlibname %mklibname %{name} 19
+%define olderlibname %mklibname %{name} 15
+%define evenolderlibname %mklibname %{name} 12
+%define libname %mklibname %{name}
+%define devname %mklibname -d %{name}
 
 Summary:	Cartographic projection software
 Name:		proj
 Version:	9.0.0
-Release:	1
+Release:	2
 License:	MIT
 Group:		Sciences/Geosciences
 Url:		http://proj4.org/
@@ -29,13 +37,6 @@ Cartographic projection software and libraries.
 
 #-------------------------------------------------------------------------
 
-%define major 25
-%define lastversionedlibname %mklibname %{name} 22
-%define oldlibname %mklibname %{name} 19
-%define olderlibname %mklibname %{name} 15
-%define evenolderlibname %mklibname %{name} 12
-%define libname %mklibname %{name}
-
 %package -n %{libname}
 Summary:	Cartographic projection software - Libraries
 Group:		System/Libraries
@@ -51,8 +52,6 @@ Cartographic projection software and libraries.
 %{_libdir}/libproj.so.%{major}*
 
 #-------------------------------------------------------------------------
-
-%define devname %mklibname -d %{name}
 
 %package -n %{devname}
 Summary:	Cartographic projection software - Development files
@@ -74,15 +73,17 @@ Cartographic projection development files.
 #-------------------------------------------------------------------------
 
 %prep
-%setup -D -q
+%autosetup -D
 find . -name "*.c" -exec chmod 644 {} \;
 pushd data
 tar xf %{SOURCE1}
 popd
-%cmake -G Ninja
 
 %build
-%ninja_build -C build
+%cmake \
+	-G Ninja
+%ninja_build
 
 %install
 %ninja_install -C build
+
