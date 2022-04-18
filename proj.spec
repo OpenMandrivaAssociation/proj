@@ -9,12 +9,12 @@
 Summary:	Cartographic projection software
 Name:		proj
 Version:	9.0.0
-Release:	2
+Release:	3
 License:	MIT
 Group:		Sciences/Geosciences
 Url:		http://proj4.org/
-Source0:	https://download.osgeo.org/proj/proj-%{version}.tar.gz
-Source1:	https://download.osgeo.org/proj/proj-datumgrid-1.8.zip
+Source0:	https://download.osgeo.org/%{name}/%{name}-%{version}.tar.gz
+Source1:	https://download.osgeo.org/%{name}/%{name}-data-1.9.tar.gz
 BuildRequires:	cmake
 BuildRequires:	ninja
 BuildRequires:	pkgconfig(gtest)
@@ -22,6 +22,8 @@ BuildRequires:	pkgconfig(libtiff-4)
 BuildRequires:	pkgconfig(libcurl)
 BuildRequires:	pkgconfig(sqlite3)
 BuildRequires:	sqlite-tools
+
+Requires:	%{name}-data = %{version}-%{release}
 
 Provides:	proj4
 
@@ -32,8 +34,22 @@ Cartographic projection software and libraries.
 %doc AUTHORS COPYING ChangeLog README
 %doc %{_docdir}/proj/NEWS
 %{_bindir}/*
+%dir %{_datadir}/%{name}
+%{_datadir}/%{name}/*
 %{_mandir}/man1/*
-%{_datadir}/proj
+
+#-------------------------------------------------------------------------
+	
+%package data
+Summary:	Proj data files
+BuildArch:	noarch
+
+%description data
+Proj arch independent data files.
+	
+%files data
+%license %{_docdir}/%{name}/COPYING
+%dir %{_datadir}/%{name}
 
 #-------------------------------------------------------------------------
 
@@ -73,8 +89,9 @@ Cartographic projection development files.
 #-------------------------------------------------------------------------
 
 %prep
-%autosetup -D
-find . -name "*.c" -exec chmod 644 {} \;
+%autosetup -p1
+
+# data
 pushd data
 tar xf %{SOURCE1}
 popd
