@@ -35,7 +35,6 @@ Cartographic projection software and libraries.
 %doc %{_docdir}/proj/NEWS
 %{_bindir}/*
 %dir %{_datadir}/%{name}
-%{_datadir}/%{name}/*
 %{_mandir}/man1/*
 
 #-------------------------------------------------------------------------
@@ -50,6 +49,7 @@ Proj arch independent data files.
 %files data
 %license %{_docdir}/%{name}/COPYING
 %dir %{_datadir}/%{name}
+%{_datadir}/%{name}/*
 
 #-------------------------------------------------------------------------
 
@@ -91,11 +91,6 @@ Cartographic projection development files.
 %prep
 %autosetup -p1
 
-# data
-pushd data
-tar xf %{SOURCE1}
-popd
-
 %build
 %cmake \
 	-DUSE_EXTERNAL_GTEST:BOOL=ON \
@@ -104,4 +99,14 @@ popd
 
 %install
 %ninja_install -C build
+
+# data
+install -dm 0755 %{buildroot}%{_datadir}/%{name}
+tar -xf %{SOURCE1} --directory %{buildroot}%{_datadir}/%{name}
+
+%check
+# nkg test requires internet connection
+pushd build/test
+ctest -- -E nkg
+popd
 
