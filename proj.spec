@@ -1,7 +1,5 @@
-# Bogus debugsource list
-#global _empty_manifest_terminate_build 0
-
 %define major 22
+
 %define oldlibname %mklibname %{name} 19
 %define olderlibname %mklibname %{name} 15
 %define evenolderlibname %mklibname %{name} 12
@@ -11,12 +9,12 @@
 Summary:	Cartographic projection software
 Name:		proj
 Version:	8.2.1
-Release:	2
+Release:	3
 License:	MIT
 Group:		Sciences/Geosciences
 Url:		http://proj4.org/
-Source0:	https://download.osgeo.org/proj/proj-%{version}.tar.gz
-Source1:	https://download.osgeo.org/proj/proj-datumgrid-1.8.zip
+Source0:	https://download.osgeo.org/%{name}/%{name}-%{version}.tar.gz
+Source1:	https://download.osgeo.org/%{name}/%{name}-data-1.8.tar.gz
 BuildRequires:	cmake
 BuildRequires:	ninja
 BuildRequires:	pkgconfig(gtest)
@@ -24,6 +22,8 @@ BuildRequires:	pkgconfig(libtiff-4)
 BuildRequires:	pkgconfig(libcurl)
 BuildRequires:	pkgconfig(sqlite3)
 BuildRequires:	sqlite-tools
+
+Requires:	%{name}-data = %{version}-%{release}
 
 Provides:	proj4
 
@@ -35,7 +35,20 @@ Cartographic projection software and libraries.
 %doc %{_docdir}/proj/NEWS
 %{_bindir}/*
 %{_mandir}/man1/*
-%{_datadir}/proj
+
+#-------------------------------------------------------------------------
+
+%package data
+Summary:	Proj data files
+BuildArch:	noarch
+
+%description data
+Proj arch independent data files.
+
+%files data
+%license %{_docdir}/%{name}/COPYING
+%dir %{_datadir}/%{name}
+%{_datadir}/%{name}/*
 
 #-------------------------------------------------------------------------
 
@@ -74,12 +87,7 @@ Cartographic projection development files.
 #-------------------------------------------------------------------------
 
 %prep
-%autosetup -D
-#find . -name "*.c" -exec chmod 644 {} \;
-
-pushd data
-tar xf %{SOURCE1}
-popd
+%autosetup -p1
 
 %build
 %cmake \
@@ -89,3 +97,14 @@ popd
 
 %install
 %ninja_install -C build
+
+# data
+install -dm 0755 %{buildroot}%{_datadir}/%{name}
+tar -xf %{SOURCE1} --directory %{buildroot}%{_datadir}/%{name}
+
+%check
+# nkg test requires internet connection
+pushd build/test
+ctest -- -E nkg
+popd
+
