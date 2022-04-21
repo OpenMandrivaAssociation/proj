@@ -17,6 +17,7 @@ Source0:	https://download.osgeo.org/%{name}/%{name}-%{version}.tar.gz
 Source1:	https://download.osgeo.org/%{name}/%{name}-data-1.8.tar.gz
 BuildRequires:	cmake
 BuildRequires:	ninja
+BuildRequires:	sqlite-tools
 BuildRequires:	pkgconfig(gtest)
 BuildRequires:	pkgconfig(libtiff-4)
 BuildRequires:	pkgconfig(libcurl)
@@ -92,6 +93,7 @@ Cartographic projection development files.
 %build
 %cmake \
 	-DUSE_EXTERNAL_GTEST:BOOL=ON \
+	-DENABLE_IPO:BOOL=ON \
 	-G Ninja
 %ninja_build
 
