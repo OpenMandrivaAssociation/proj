@@ -186,6 +186,6 @@ tar -xf %{SOURCE1} --directory %{buildroot}%{_datadir}/%{name}
 # nkg test requires internet connection
 # defmode test fails on znver1 arch
 pushd build/test
-LD_LIBRARY_PATH=%{buildroot}%{_libdir} ctest -- -E nkg defmode
+LD_LIBRARY_PATH=%{buildroot}%{_libdir} ctest -- -E nkg -E defmode
 popd
 
