@@ -33,7 +33,7 @@ Cartographic projection software and libraries.
 
 %files
 %doc AUTHORS COPYING ChangeLog README
-%doc %{_docdir}/proj/NEWS
+%doc %{_docdir}/%{name}/NEWS
 %{_bindir}/*
 %dir %{_datadir}/%{name}
 %{_mandir}/man1/*
@@ -59,8 +59,10 @@ Proj arch independent data files.
 %{_datadir}/%{name}/nad27
 %{_datadir}/%{name}/nad83
 %{_datadir}/%{name}/other.extra
-%{_datadir}/%{name}/proj.db
-%{_datadir}/%{name}/proj.ini
+%{_datadir}/%{name}/%{name}.db
+%{_datadir}/%{name}/%{name}.db-shm
+%{_datadir}/%{name}/%{name}.db-wal
+%{_datadir}/%{name}/%{name}.ini
 %{_datadir}/%{name}/world
 %{_datadir}/%{name}/README.DATA
 %{_datadir}/%{name}/copyright_and_licenses.csv
@@ -82,7 +84,7 @@ Group:		System/Libraries
 Cartographic projection software and libraries.
 
 %files -n %{libname}
-%{_libdir}/libproj.so.%{major}*
+%{_libdir}/lib%{name}.so.%{major}*
 
 #-------------------------------------------------------------------------
 
@@ -97,11 +99,11 @@ Cartographic projection development files.
 
 %files -n %{devname}
 %{_includedir}/*.h
-%{_includedir}/proj/*.hpp
+%{_includedir}/%{name}/*.hpp
 %{_libdir}/*.so
-%{_libdir}/pkgconfig/proj.pc
-%{_libdir}/cmake/proj
-%{_libdir}/cmake/proj4
+%{_libdir}/pkgconfig/%{name}.pc
+%{_libdir}/cmake/%{name}
+%{_libdir}/cmake/%{name}4
 
 #-------------------------------------------------------------------------
 
@@ -143,8 +145,8 @@ Supplements:  proj\
 %data_subpkg -c jp -n Japan
 %data_subpkg -c mx -n Mexico
 %data_subpkg -c no -n Norway
-%data_subpkg -c nc -n %{quote:New Caledonia}
 %data_subpkg -c nl -n Netherlands
+%data_subpkg -c nc -n %{quote:New Caledonia}
 %data_subpkg -c nz -n %{quote:New Zealand}
 %data_subpkg -c pl -n Poland
 %data_subpkg -c pt -n Portugal
@@ -169,6 +171,13 @@ Supplements:  proj\
 %install
 %ninja_install -C build
 
+# omdv sqlite forced to use WAL journal for db files
+# and beacuse the fyle-system at runtime will be
+# read-only we should prodive -shm and -wal file now,
+# even if they are empty. More info at
+# https://sqlite.org/wal.html#read_only_databases
+touch %{buildroot}%{_datadir}/%{name}/%{name}.db{-shm,-wal}
+
 # data
 install -dm 0755 %{buildroot}%{_datadir}/%{name}
 tar -xf %{SOURCE1} --directory %{buildroot}%{_datadir}/%{name}
@@ -176,6 +185,6 @@ tar -xf %{SOURCE1} --directory %{buildroot}%{_datadir}/%{name}
 %check
 # nkg test requires internet connection
 pushd build/test
-ctest -- -E nkg
+LD_LIBRARY_PATH=%{buildroot}%{_libdir} ctest -- -E nkg
 popd
 
