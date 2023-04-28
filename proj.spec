@@ -60,6 +60,7 @@ Proj arch independent data files.
 %{_datadir}/%{name}/nad27
 %{_datadir}/%{name}/nad83
 %{_datadir}/%{name}/other.extra
+%{_datadir}/%{name}/si_gurs*
 %{_datadir}/%{name}/%{name}.db
 %{_datadir}/%{name}/%{name}.db-shm
 %{_datadir}/%{name}/%{name}.db-wal
@@ -189,4 +190,3 @@ tar -xf %{SOURCE1} --directory %{buildroot}%{_datadir}/%{name}
 pushd build/test
 LD_LIBRARY_PATH=%{buildroot}%{_libdir} ctest -- -E nkg -E defmode || :
 popd
-
