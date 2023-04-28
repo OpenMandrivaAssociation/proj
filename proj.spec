@@ -22,6 +22,7 @@ BuildRequires:	pkgconfig(gtest)
 BuildRequires:	pkgconfig(libtiff-4)
 BuildRequires:	pkgconfig(libcurl)
 BuildRequires:	pkgconfig(sqlite3)
+BuildRequires:	pkgconfig(libssl)
 BuildRequires:	sqlite-tools
 
 Requires:	%{name}-data = %{version}-%{release}
