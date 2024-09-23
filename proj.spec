@@ -8,13 +8,13 @@
 
 Summary:	Cartographic projection software
 Name:		proj
-Version:	9.4.1
+Version:	9.5.0
 Release:	1
 License:	MIT
 Group:		Sciences/Geosciences
 Url:		http://proj.org/
 Source0:	https://download.osgeo.org/%{name}/%{name}-%{version}.tar.gz
-Source1:	https://download.osgeo.org/%{name}/%{name}-data-1.15.tar.gz
+Source1:	https://download.osgeo.org/%{name}/%{name}-data-1.19.tar.gz
 BuildRequires:	cmake
 BuildRequires:	ninja
 BuildRequires:	sqlite-tools
@@ -33,8 +33,7 @@ Provides:	proj4
 Cartographic projection software and libraries.
 
 %files
-%doc AUTHORS COPYING ChangeLog README
-%doc %{_docdir}/%{name}/NEWS
+%doc COPYING ChangeLog AUTHORS.md NEWS.md
 %{_bindir}/*
 %dir %{_datadir}/%{name}
 %{_mandir}/man1/*
@@ -56,6 +55,8 @@ Proj arch independent data files.
 %{_datadir}/%{name}/ITRF2000
 %{_datadir}/%{name}/ITRF2008
 %{_datadir}/%{name}/ITRF2014
+%{_datadir}/%{name}/ITRF2020
+%{_datadir}/%{name}/cz_cuzk*
 %{_datadir}/%{name}/nad.lst
 %{_datadir}/%{name}/nad27
 %{_datadir}/%{name}/nad83
