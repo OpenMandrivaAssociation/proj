@@ -12,7 +12,7 @@ Version:	9.5.0
 Release:	1
 License:	MIT
 Group:		Sciences/Geosciences
-Url:		http://proj.org/
+Url:		https://proj.org/
 Source0:	https://download.osgeo.org/%{name}/%{name}-%{version}.tar.gz
 Source1:	https://download.osgeo.org/%{name}/%{name}-data-1.19.tar.gz
 BuildRequires:	cmake
