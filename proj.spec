@@ -8,13 +8,13 @@
 
 Summary:	Cartographic projection software
 Name:		proj
-Version:	9.5.1
+Version:	9.6.0
 Release:	1
 License:	MIT
 Group:		Sciences/Geosciences
 Url:		https://proj.org/
 Source0:	https://download.osgeo.org/%{name}/%{name}-%{version}.tar.gz
-Source1:	https://download.osgeo.org/%{name}/%{name}-data-1.19.tar.gz
+Source1:	https://download.osgeo.org/%{name}/%{name}-data-1.22.tar.gz
 BuildRequires:	cmake
 BuildRequires:	ninja
 BuildRequires:	sqlite-tools
@@ -23,6 +23,7 @@ BuildRequires:	pkgconfig(libtiff-4)
 BuildRequires:	pkgconfig(libcurl)
 BuildRequires:	pkgconfig(sqlite3)
 BuildRequires:	pkgconfig(libssl)
+BuildRequires:	pkgconfig(bash-completion)
 BuildRequires:	sqlite-tools
 
 Requires:	%{name}-data = %{version}-%{release}
@@ -35,6 +36,7 @@ Cartographic projection software and libraries.
 %files
 %doc COPYING ChangeLog AUTHORS.md NEWS.md
 %{_bindir}/*
+%{_datadir}/bash-completion/completions/projinfo
 %dir %{_datadir}/%{name}
 %{_mandir}/man1/*
 
@@ -72,6 +74,12 @@ Proj arch independent data files.
 %{_datadir}/%{name}/deformation_model.schema.json
 %{_datadir}/%{name}/projjson.schema.json
 %{_datadir}/%{name}/triangulation.schema.json
+%{_datadir}/%{name}/hu_bme_README.txt
+%{_datadir}/%{name}/hu_bme_geoid2014.tif
+%{_datadir}/%{name}/hu_bme_hd72corr.tif
+%{_datadir}/%{name}/lv_lgia_README.txt
+%{_datadir}/%{name}/lv_lgia_lks92to2020.tif
+%{_datadir}/%{name}/lv_lgia_lv14.tif
 
 #-------------------------------------------------------------------------
 
