@@ -8,13 +8,13 @@
 
 Summary:	Cartographic projection software
 Name:		proj
-Version:	9.6.0
+Version:	9.7.1
 Release:	1
 License:	MIT
 Group:		Sciences/Geosciences
 Url:		https://proj.org/
 Source0:	https://download.osgeo.org/%{name}/%{name}-%{version}.tar.gz
-Source1:	https://download.osgeo.org/%{name}/%{name}-data-1.22.tar.gz
+Source1:	https://download.osgeo.org/%{name}/%{name}-data-1.24.tar.gz
 BuildRequires:	cmake
 BuildRequires:	ninja
 BuildRequires:	sqlite-tools
