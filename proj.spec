@@ -8,7 +8,7 @@
 
 Summary:	Cartographic projection software
 Name:		proj
-Version:	9.7.1
+Version:	9.8.0
 Release:	1
 License:	MIT
 Group:		Sciences/Geosciences
